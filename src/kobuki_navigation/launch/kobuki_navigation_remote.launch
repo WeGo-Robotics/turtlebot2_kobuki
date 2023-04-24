@@ -1,0 +1,31 @@
+<launch>
+
+  <arg name="map_file" default="$(find kobuki_navigation)/maps/map.yaml"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+
+  <!-- kobuki_bringup -->
+  <include file="$(find kobuki_node)/launch/minimal.launch">
+
+  </include>
+  <arg name="urdf_file" default="$(find xacro)/xacro '$(find kobuki_description)/urdf/kobuki_standalone.urdf.xacro'"/>
+  <param name="robot_description" command="$(arg urdf_file)"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="5.0"/>
+  </node>
+
+  <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- AMCL -->
+  <include file="$(find kobuki_navigation)/launch/amcl.launch"/>
+
+  <!-- move_base -->
+  <include file="$(find kobuki_navigation)/launch/move_base.launch">
+
+
+  </include>
+
+
+</launch>
