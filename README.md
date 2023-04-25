@@ -3,7 +3,7 @@ Kobuki Packages information with Nvidia-TX2 and Rplidar
 
 ### Prerequisites :
 
-
+    kobuki_Robot(Turtlebot2)
     Ubuntu 18.04
     ROS Melodic (Tested)
 
